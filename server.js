@@ -64,7 +64,6 @@ server.get('/gigapets', async(req,res)=>{
     }catch(error){}
   });
 
-const port = 3000;
-server.listen(port, function() {
-  console.log(`\n=== Web API Listening on http://localhost:${port} ===\n`);
-});
+  const PORT = process.env.PORT || 5000;
+
+  server.listen(PORT, () => console.log('=== server on port -->Heroku<-- ===')); 
