@@ -16,14 +16,14 @@ server.use(express.json());
 const secret="temporary secret";
 
 
-server.get('/gigapets', async(req,res)=>{
-    try{
-      const gigapets = await db('gigapets').select("gigapets.child","gigapets.username","gigapets.meal","gigapets.pet");//all records from table
-      res.status(200).json(gigapets);
-    }catch(error){
-      res.status(500).json(error);
-    }
-  });
+// server.get('/gigapets', async(req,res)=>{
+//     try{
+//       const gigapets = await db('gigapets').select("gigapets.child","gigapets.username","gigapets.meal","gigapets.pet");//all records from table
+//       res.status(200).json(gigapets);
+//     }catch(error){
+//       res.status(500).json(error);
+//     }
+//   });
 
   server.get('/:id', async(req,res)=>{
     try{
