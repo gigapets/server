@@ -1,6 +1,14 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const helmet = require('helmet');
+const cors = require('cors');
+const morgan = require('morgan');
+
+server.use(helmet());
+server.use(cors());
+server.use(morgan());
+
 
 const Users = require('./db-functions');
 
