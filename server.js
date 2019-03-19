@@ -33,7 +33,7 @@ const secret="temporary secret";
 //     }
 //   });
 
-  server.get('/:id', async(req,res)=>{
+  server.get('/gigapets/:id', async(req,res)=>{
     try{
       const gigapet = await db('gigapets-main').where({id:req.params.id}).first().select("gigapets.child","gigapets.username","gigapets.meal","gigapets.pet");
       res.status(200).json(gigapet);
@@ -42,7 +42,7 @@ const secret="temporary secret";
     }
   });
 
-  server.post('/',async(req,res)=>{
+  server.post('/gigapets',async(req,res)=>{
     try{
       const [id]= await db('gigapets-main').insert(req.body);
       const gigapet = await db('gigapets-main').where({ id }).first();
@@ -125,7 +125,7 @@ const secret="temporary secret";
     }
   }
 
-  server.get('/', (req,res)=>{
+  server.get('/gigapets', (req,res)=>{
     Users.findMain()
       .then(users => {
         res.json( users );
@@ -137,7 +137,7 @@ const secret="temporary secret";
 
 
 
-  server.put('/:id',async(req,res)=>{
+  server.put('/gigapets/:id',async(req,res)=>{
     try{
       const count = await db('gigapets-main').where({id:req.params.id}).update(req.body);
       if(count>0){
@@ -149,7 +149,7 @@ const secret="temporary secret";
     }catch(error){}
   });
   
-  server.delete('/:id',async(req,res)=>{
+  server.delete('/gigapets/:id',async(req,res)=>{
     try{
       const count = await db('gigapets-main')
       .where({id:req.params.id})
