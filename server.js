@@ -1,4 +1,8 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+const Users = require('./db-functions');
 
 const knex = require('knex');
 const knexConfig = require('./knexfile.js');
@@ -8,6 +12,8 @@ const db = knex(knexConfig.development);
 const server = express();
 
 server.use(express.json());
+
+const secret="temporary secret";
 
 
 server.get('/gigapets', async(req,res)=>{
@@ -38,6 +44,47 @@ server.get('/gigapets', async(req,res)=>{
       }
   });
 
+  server.post('/registration', (req,res) =>{
+    let user = req.body;
+    if(!user.username || !user.password){
+        res.status(422).json({message:'username and password required'})
+    }else{
+      const hash = bcrypt.hashSync(user.password, 5);
+      user.password = hash;
+  
+      Users.add(user)
+      .then(saved =>{
+          res.status(201).json(saved)
+      }).catch(error => {
+        res.status(500).json(error);
+      })
+    }
+    
+  });
+
+  
+      //to be used when completed with new endpoints
+  function authentication(req, res, next) {
+    const token = req.headers.authorization;
+  
+    if (token) {
+      
+      jwt.verify(token, secret, (err, decodedToken) => {
+        if (err) {
+          
+          res.status(401).json( "Not Authorized" );
+        } else {
+          req.decodedJwt = decodedToken;
+          next();
+        }
+      });
+    } else {
+      res.status(401).json('no access');
+    }
+  }
+
+
+
   server.put('/gigapets/:id',async(req,res)=>{
     try{
       const count = await db('gigapets').where({id:req.params.id}).update(req.body);
@@ -66,4 +113,4 @@ server.get('/gigapets', async(req,res)=>{
 
   const PORT = process.env.PORT || 5000;
 
-  server.listen(PORT, () => console.log('=== server on port -->Heroku<-- ===')); 
+  server.listen(5000, () => console.log('=== server on port -->Heroku<-- ===')); 
