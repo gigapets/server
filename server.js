@@ -25,19 +25,19 @@ server.get('/gigapets', async(req,res)=>{
     }
   });
 
-  server.get('/user/:id', async(req,res)=>{
+  server.get('/:id', async(req,res)=>{
     try{
-      const gigapet = await db('gigapet').where({id:req.params.id}).first().select("gigapets.child","gigapets.username","gigapets.meal","gigapets.pet");
+      const gigapet = await db('gigapets-main').where({id:req.params.id}).first().select("gigapets.child","gigapets.username","gigapets.meal","gigapets.pet");
       res.status(200).json(gigapet);
     }catch(error){
       res.status(500).json(error);
     }
   });
 
-  server.post('/gigapets',async(req,res)=>{
+  server.post('/',async(req,res)=>{
     try{
-      const [id]= await db('gigapets').insert(req.body);
-      const gigapet = await db('gigapets').where({ id }).first().select("gigapets.child","gigapets.username","gigapets.meal","gigapets.pet");
+      const [id]= await db('gigapets-main').insert(req.body);
+      const gigapet = await db('gigapets-main').where({ id }).first();
       res.status(201).json(gigapet);
     }catch(error){
       res.status(500).json(error);
@@ -120,7 +120,7 @@ server.get('/gigapets', async(req,res)=>{
   server.get('/', (req,res)=>{
     Users.findMain()
       .then(users => {
-        res.json({ users });
+        res.json( users );
       })
       .catch(err => res.send(err));
   });
@@ -129,11 +129,11 @@ server.get('/gigapets', async(req,res)=>{
 
 
 
-  server.put('/gigapets/:id',async(req,res)=>{
+  server.put('/:id',async(req,res)=>{
     try{
-      const count = await db('gigapets').where({id:req.params.id}).update(req.body);
+      const count = await db('gigapets-main').where({id:req.params.id}).update(req.body);
       if(count>0){
-        const gigapet = await db('gigapets').where({ id:req.params.id}).first();
+        const gigapet = await db('gigapets-main').where({ id:req.params.id}).first();
       res.status(200).json(gigapet)
       }else{
         res.status(404).json('User Not Found')
@@ -141,9 +141,9 @@ server.get('/gigapets', async(req,res)=>{
     }catch(error){}
   });
   
-  server.delete('/gigapets/:id',async(req,res)=>{
+  server.delete('/:id',async(req,res)=>{
     try{
-      const count = await db('gigapets')
+      const count = await db('gigapets-main')
       .where({id:req.params.id})
       .del();
       
@@ -157,4 +157,4 @@ server.get('/gigapets', async(req,res)=>{
 
   const PORT = process.env.PORT || 5000;
 
-  server.listen(5000, () => console.log('=== server on port -->Heroku<-- ===')); 
+  server.listen(PORT, () => console.log('=== server on port -->Heroku<-- ===')); 
