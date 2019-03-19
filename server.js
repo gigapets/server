@@ -35,7 +35,7 @@ const secret="temporary secret";
 
   server.get('/gigapets/:id', async(req,res)=>{
     try{
-      const gigapet = await db('gigapets-main').where({id:req.params.id}).first().select("gigapets.child","gigapets.username","gigapets.meal","gigapets.pet");
+      const gigapet = await db('gigapetsMain').where({id:req.params.id}).first().select("gigapets.child","gigapets.username","gigapets.meal","gigapets.pet");
       res.status(200).json(gigapet);
     }catch(error){
       res.status(500).json(error);
@@ -44,8 +44,8 @@ const secret="temporary secret";
 
   server.post('/gigapets',async(req,res)=>{
     try{
-      const [id]= await db('gigapets-main').insert(req.body);
-      const gigapet = await db('gigapets-main').where({ id }).first();
+      const [id]= await db('gigapetsMain').insert(req.body);
+      const gigapet = await db('gigapetsMain').where({ id }).first();
       res.status(201).json(gigapet);
     }catch(error){
       res.status(500).json(error);
@@ -139,9 +139,9 @@ const secret="temporary secret";
 
   server.put('/gigapets/:id',async(req,res)=>{
     try{
-      const count = await db('gigapets-main').where({id:req.params.id}).update(req.body);
+      const count = await db('gigapetsMain').where({id:req.params.id}).update(req.body);
       if(count>0){
-        const gigapet = await db('gigapets-main').where({ id:req.params.id}).first();
+        const gigapet = await db('gigapetsMain').where({ id:req.params.id}).first();
       res.status(200).json(gigapet)
       }else{
         res.status(404).json('User Not Found')
@@ -151,7 +151,7 @@ const secret="temporary secret";
   
   server.delete('/gigapets/:id',async(req,res)=>{
     try{
-      const count = await db('gigapets-main')
+      const count = await db('gigapetsMain')
       .where({id:req.params.id})
       .del();
       

@@ -15,7 +15,7 @@ function find() {
 }
 
 function findMain() {
-    return db('gigapets-main')
+    return db('gigapetsMain')
 }
 
 
