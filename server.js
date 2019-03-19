@@ -5,6 +5,10 @@ const helmet = require('helmet');
 const cors = require('cors');
 const morgan = require('morgan');
 
+const server = express();
+
+server.use(express.json());
+
 server.use(helmet());
 server.use(cors());
 server.use(morgan());
@@ -16,10 +20,6 @@ const knex = require('knex');
 const knexConfig = require('./knexfile.js');
 
 const db = knex(knexConfig.development);
-
-const server = express();
-
-server.use(express.json());
 
 const secret="temporary secret";
 
