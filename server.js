@@ -97,7 +97,7 @@ server.get('/gigapets', async(req,res)=>{
 
 
   
-      //to be used when completed with new endpoints
+      //to be used when completed with new get endpoint
   function authentication(req, res, next) {
     const token = req.headers.authorization;
   
