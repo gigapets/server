@@ -7,11 +7,17 @@ module.exports = {
   find,
   findBy,
   findById,
+  findMain
 };
 
 function find() {
   return db('user-info-gigapets').select('id', 'username', 'password');
 }
+
+function findMain() {
+    return db('gigapets-main')
+}
+
 
 function findBy(filter) {
   return db('user-info-gigapets').where(filter);

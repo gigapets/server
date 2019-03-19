@@ -117,13 +117,14 @@ server.get('/gigapets', async(req,res)=>{
     }
   }
 
-  server.get('/', authentication, (req,res) =>{
-    Users.find()
+  server.get('/',authentication, (req,res)=>{
+    Users.findMain()
       .then(users => {
         res.json({ users });
       })
       .catch(err => res.send(err));
   });
+  
   
 
 
