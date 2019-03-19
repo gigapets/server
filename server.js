@@ -117,6 +117,15 @@ server.get('/gigapets', async(req,res)=>{
     }
   }
 
+  server.get('/', authentication, (req,res) =>{
+    Users.find()
+      .then(users => {
+        res.json({ users });
+      })
+      .catch(err => res.send(err));
+  });
+  
+
 
 
   server.put('/gigapets/:id',async(req,res)=>{
