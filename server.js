@@ -35,7 +35,7 @@ const secret="temporary secret";
 
   server.get('/gigapets/:id', async(req,res)=>{
     try{
-      const gigapet = await db('gigapetsMain').where({id:req.params.id}).first().select("gigapets.child","gigapets.username","gigapets.meal","gigapets.pet");
+      const gigapet = await db('gigapetsMain').where({id:req.params.id}).first();
       res.status(200).json(gigapet);
     }catch(error){
       res.status(500).json(error);
