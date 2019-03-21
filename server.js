@@ -26,7 +26,7 @@ const secret="temporary secret";
 
 server.get('/gigapets', async(req,res)=>{
     try{
-      const gigapets = await db('gigapets')
+      const gigapets = await db('gigapetsMain')
       res.status(200).json(gigapets);
     }catch(error){
       res.status(500).json(error);
