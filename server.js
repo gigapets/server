@@ -24,14 +24,25 @@ const db = knex(knexConfig.development);
 const secret="temporary secret";
 
 
-// server.get('/gigapets', async(req,res)=>{
-//     try{
-//       const gigapets = await db('gigapets').select("gigapets.child","gigapets.username","gigapets.meal","gigapets.pet");//all records from table
-//       res.status(200).json(gigapets);
-//     }catch(error){
-//       res.status(500).json(error);
-//     }
-//   });
+server.get('/gigapets', async(req,res)=>{
+    try{
+      const gigapets = await db('gigapets')
+      res.status(200).json(gigapets);
+    }catch(error){
+      res.status(500).json(error);
+    }
+  });
+
+  server.get('/users', async(req,res)=>{
+    try{
+      const users = await db('user-info-gigapets')
+      res.status(200).json(users);
+    }catch(error){
+      res.status(500).json(error);
+    }
+  });
+
+
 
   server.get('/gigapets/:id', async(req,res)=>{
     try{
@@ -125,13 +136,13 @@ const secret="temporary secret";
     }
   }
 
-  server.get('/gigapets', (req,res)=>{
-    Users.findMain()
-      .then(users => {
-        res.json( users );
-      })
-      .catch(err => res.send(err));
-  });
+  // server.get('/gigapets', (req,res)=>{
+  //   Users.findMain().join('gigapetsMain', 'user-info-gigapets.id', 'gigapetsMain.user_id').select('*').from('gigapetsMain')
+  //     .then(users => {
+  //       res.json( users );
+  //     })
+  //     .catch(err => res.send(err));
+  // });
   
   
 
